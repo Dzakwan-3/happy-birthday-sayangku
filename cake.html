@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday 🎂</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #ff9ad5, #caa6ff);
+  overflow: hidden;
+  transition: 1s;
+}
+
+body.dark {
+  background: #0a0a0a;
+}
+
+/* CAKE */
+.cake {
+  position: relative;
+  width: 220px;
+}
+
+.layer {
+  height: 50px;
+  background: linear-gradient(#ff85c1, #ff66cc);
+  border-radius: 15px;
+  margin-top: 10px;
+}
+
+.layer::before {
+  content: "";
+  position: absolute;
+  width: 220px;
+  height: 15px;
+  background: white;
+  top: -8px;
+  border-radius: 10px;
+}
+
+/* CANDLE */
+.candle {
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 50px;
+  background: repeating-linear-gradient(45deg, white, white 5px, pink 5px, pink 10px);
+  border-radius: 5px;
+}
+
+.flame {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 18px;
+  height: 25px;
+  background: radial-gradient(circle, yellow, orange, red);
+  border-radius: 50%;
+  animation: flicker 0.2s infinite;
+}
+
+@keyframes flicker {
+  50% { transform: translateX(-50%) scale(1.2); }
+}
+
+/* BUTTON */
+button {
+  margin-top: 40px;
+  padding: 15px 25px;
+  border: none;
+  border-radius: 20px;
+  background: #ff66cc;
+  color: white;
+  cursor: pointer;
+}
+
+/* FIREWORK */
+.firework {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: hsl(var(--hue), 100%, 60%);
+  box-shadow: 0 0 12px hsl(var(--hue), 100%, 70%);
+  animation: explode 1.2s ease-out forwards;
+}
+
+@keyframes explode {
+  0% {
+    transform: translate(0,0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--x), var(--y)) scale(0.3);
+    opacity: 0;
+  }
+}
+
+/* CONFETTI NATURAL */
+.confetti {
+  position: absolute;
+  top: -20px;
+  width: var(--size);
+  height: var(--size);
+  background: hsl(var(--hue), 100%, 70%);
+  opacity: 0.9;
+
+  animation: fall var(--duration) linear forwards;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateX(0) translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateX(-20px) translateY(25vh) rotate(90deg);
+  }
+  50% {
+    transform: translateX(20px) translateY(50vh) rotate(180deg);
+  }
+  75% {
+    transform: translateX(-15px) translateY(75vh) rotate(270deg);
+  }
+  100% {
+    transform: translateX(10px) translateY(110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* TEXT */
+.love {
+  position: absolute;
+  top: 20%;
+  font-size: 2rem;
+  color: pink;
+  opacity: 0;
+  transition: 1s;
+}
+
+.love.show {
+  opacity: 1;
+  transform: scale(1.2);
+}
+</style>
+</head>
+
+<body>
+
+<h2>Tiup lilinnya ya</h2>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div class="cake">
+  <div class="candle">
+    <div class="flame" id="flame"></div>
+  </div>
+  <div class="layer"></div>
+  <div class="layer"></div>
+  <div class="layer"></div>
+</div>
+
+<button onclick="manualBlow()">Klik kalau mic gak jalan 🎂</button>
+
+<div class="love" id="loveText">Happy Birthday Seng</div>
+
+<audio id="sound" src="item/music/mercon.mp3"></audio>
+
+<script>
+let alreadyBlown = false;
+
+// === MAIN ===
+function blow() {
+  if (alreadyBlown) return;
+  alreadyBlown = true;
+
+  document.getElementById("flame").style.display = "none";
+  document.body.classList.add("dark");
+  document.getElementById("sound").play().catch(()=>{});
+  document.getElementById("loveText").classList.add("show");
+
+  // FIREWORK
+  for (let i = 0; i < 6; i++) {
+    setTimeout(() => {
+
+      const centerX = Math.random() * window.innerWidth;
+      const centerY = Math.random() * (window.innerHeight / 2);
+
+      for (let j = 0; j < 80; j++) {
+        const f = document.createElement("div");
+        f.className = "firework";
+
+        f.style.left = centerX + "px";
+        f.style.top = centerY + "px";
+
+        const angle = Math.random() * 2 * Math.PI;
+        const distance = Math.random() * 200 + 80;
+
+        f.style.setProperty("--x", Math.cos(angle) * distance + "px");
+        f.style.setProperty("--y", Math.sin(angle) * distance + "px");
+        f.style.setProperty("--hue", Math.random() * 360);
+
+        document.body.appendChild(f);
+        setTimeout(()=>f.remove(),1200);
+      }
+
+    }, i * 400);
+  }
+
+  // CONFETTI NATURAL
+  for (let i = 0; i < 120; i++) {
+    const c = document.createElement("div");
+    c.className = "confetti";
+
+    c.style.left = Math.random() * 100 + "vw";
+    c.style.setProperty("--hue", Math.random() * 360);
+    c.style.setProperty("--size", (Math.random() * 8 + 4) + "px");
+    c.style.setProperty("--duration", (Math.random() * 2 + 3) + "s");
+    c.style.animationDelay = Math.random() * 2 + "s";
+
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),5000);
+  }
+}
+
+// tombol fallback
+function manualBlow(){
+  blow();
+}
+
+// === MIC DETECT FIX ===
+navigator.mediaDevices.getUserMedia({ audio: true })
+.then(stream => {
+  const ctx = new (window.AudioContext || window.webkitAudioContext)();
+  const mic = ctx.createMediaStreamSource(stream);
+  const analyser = ctx.createAnalyser();
+
+  analyser.fftSize = 256;
+  mic.connect(analyser);
+
+  const data = new Uint8Array(analyser.frequencyBinCount);
+
+  function detect() {
+    analyser.getByteFrequencyData(data);
+    let volume = data.reduce((a,b)=>a+b)/data.length;
+
+    if (volume > 70) blow();
+
+    requestAnimationFrame(detect);
+  }
+
+  detect();
+})
+.catch(() => {
+  console.log("Mic tidak diizinkan");
+});
+</script>
+
+</body>
+</html>

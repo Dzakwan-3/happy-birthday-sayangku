@@ -1,0 +1,308 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden; /* INI KUNCI UTAMA */
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #ff9ad5, #caa6ff);
+}
+
+/* WRAPPER APP */
+.app {
+  width: 100%;
+  max-width: 390px;
+  margin: auto; /* ini yang bikin center TANPA flex body */
+  
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(20px);
+  border-radius: 30px;
+  overflow: hidden;
+}
+
+/* pastikan semua section turun ke bawah */
+section {
+  display: block;
+  width: 100%;
+}
+
+/* APP STYLE IOS */
+.app {
+  width: 100%;
+  max-width: 390px;
+  min-height: 100vh;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(20px);
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+}
+
+section {
+  padding: 60px 20px;
+  text-align: center;
+  transition: 0.5s;
+}
+
+/* HERO */
+.hero {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-text {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.title {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(2rem, 6vw, 3rem);
+  color: #ff66cc;
+  text-shadow: 0 0 10px #ff66cc, 0 0 20px #ff99dd;
+  animation: glow 4s infinite alternate, float 4s ease-in-out infinite;
+  margin: 0;
+}
+
+.subtitle {
+  font-size: clamp(1rem, 3.5vw, 1.2rem);
+  opacity: 0.8;
+  transform: translateY(-5px);
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 10px #ff66cc; }
+  to { text-shadow: 0 0 25px #ffccff; }
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+/* MUSIC */
+.music-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.card {
+  padding: 15px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(10px);
+  transition: 0.3s;
+}
+
+.card.active {
+  background: #ff66cc;
+}
+
+/* GALLERY */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.item img {
+  width: 100%;
+  border-radius: 15px;
+}
+
+/* MEMORY */
+.memory {
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ROW */
+.row {
+  display: flex;
+  gap: 15px;
+  position: absolute;
+
+  width: max-content;
+  left: 0; /* JANGAN 50% */
+}
+
+/* ANIMATION */
+@keyframes moveRight {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes moveLeft {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* FOTO */
+.row img {
+  width: 190px;
+  height: 220px;
+
+  object-fit: cover;
+  border-radius: 15px;
+
+  opacity: 0.35;
+  filter: blur(1px);
+
+  box-shadow: 0 10px 25px rgba(255, 182, 193, 0.4);
+  transition: 0.5s;
+}
+
+/* RANDOM ROTATE */
+.row img:nth-child(odd) {
+  transform: rotate(-3deg) scale(0.95);
+}
+
+.row img:nth-child(even) {
+  transform: rotate(3deg) scale(1.05);
+}
+
+.row img:nth-child(3n) {
+  transform: rotate(6deg);
+}
+
+.row img:nth-child(4n) {
+  transform: rotate(-6deg);
+}
+
+/* POSISI BARIS */
+.row1 {
+  top: 20%;
+  animation: moveRight 75s linear infinite;
+}
+
+.row2 {
+  top: 50%;
+  animation: moveLeft 75s linear infinite;
+}
+
+.row3 {
+  top: 80%;
+  animation: moveRight 75s linear infinite;
+}
+.row1 { animation-delay: -50s; }
+.row2 { animation-delay: -50s; }
+.row3 { animation-delay: -50s; }
+/* ANIMATION */
+@keyframes moveRight {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes moveLeft {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.card.active {
+  background: #ff66cc;
+  box-shadow: 0 0 20px rgba(255, 102, 204, 0.7);
+  transform: scale(1.03);
+}
+
+/* LETTER SECTION */
+.letter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.paper {
+  max-width: 320px;
+  padding: 25px;
+
+  background: #fffaf5;
+  border-radius: 20px;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+
+  font-family: 'Great Vibes', cursive;
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: #000000;
+
+  transform: rotate(-2deg);
+  position: relative;
+}
+
+/* efek kertas */
+.paper::before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: 20px;
+  width: 60px;
+  height: 20px;
+  background: rgb(255, 255, 255);
+  border-radius: 5px;
+  transform: rotate(-5deg);
+}
+
+/* animasi masuk */
+.letter .paper {
+  animation: fadeUp 1.5s ease;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px) rotate(-5deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(-2deg);
+  }
+}
+
+.video-box {
+  width: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(10px);
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.video-box video {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 20px;
+}
+
+.end {
+  padding: 80px 20px;
+}
+
+.end button {
+  padding: 15px 25px;
+  border: none;
+  border-radius: 20px;
+  background: #ff66cc;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+
+  box-shadow: 0 10px 25px rgba(255, 102, 204, 0.5);
+  transition: 0.3s;
+}
+
+.end button:hover {
+  transform: scale(1.05);
+}
